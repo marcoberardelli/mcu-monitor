@@ -20,16 +20,19 @@ class _BaudRateState extends State<BaudRate> {
           DropdownMenuEntry<int>(value: baudRate, label: baudRate.toString()));
     }
 
-    return DropdownMenu<int>(
-      initialSelection: baudRateList[0],
-      controller: baudRateController,
-      label: const Text('Baudrate'),
-      dropdownMenuEntries: entries,
-      onSelected: (int? baudRate) {
-        setState(() {
-          baudRateSelected = baudRate;
-        });
-      },
+    return Container(
+      alignment: Alignment.center,
+      child: DropdownMenu<int>(
+        initialSelection: baudRateList[0],
+        controller: baudRateController,
+        label: const Text('Baudrate'),
+        dropdownMenuEntries: entries,
+        onSelected: (int? baudRate) {
+          setState(() {
+            baudRateSelected = baudRate;
+          });
+        },
+      ),
     );
   }
 }

@@ -15,12 +15,12 @@ class ParityBit extends StatefulWidget {
 }
 
 class _ParityBitState extends State<ParityBit> {
-  final TextEditingController portController = TextEditingController();
+  final TextEditingController parityController = TextEditingController();
 
   final List<ParityBitEntry> parityBits = [
-    ParityBitEntry("7", 7),
-    ParityBitEntry("8", 8),
-    ParityBitEntry("9", 9)
+    ParityBitEntry("None", 0),
+    ParityBitEntry("Even", 1),
+    ParityBitEntry("Odd", 2)
   ];
   ParityBitEntry? pairitySelected;
 
@@ -33,16 +33,19 @@ class _ParityBitState extends State<ParityBit> {
           value: pairity, label: pairity.name));
     }
 
-    return DropdownMenu<ParityBitEntry>(
-      initialSelection: parityBits[0],
-      controller: portController,
-      label: const Text('Parity Bit'),
-      dropdownMenuEntries: parityBitsList,
-      onSelected: (ParityBitEntry? bits) {
-        setState(() {
-          pairitySelected = bits;
-        });
-      },
+    return Container(
+      alignment: Alignment.center,
+      child: DropdownMenu<ParityBitEntry>(
+        initialSelection: parityBits[0],
+        controller: parityController,
+        label: const Text('Parity Bit'),
+        dropdownMenuEntries: parityBitsList,
+        onSelected: (ParityBitEntry? bits) {
+          setState(() {
+            pairitySelected = bits;
+          });
+        },
+      ),
     );
   }
 }

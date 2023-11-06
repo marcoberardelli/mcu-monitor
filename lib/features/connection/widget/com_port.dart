@@ -31,16 +31,19 @@ class _ComPortState extends State<ComPort> {
       ports.add(DropdownMenuEntry<ComPortEntry>(value: port, label: port.name));
     }
 
-    return DropdownMenu<ComPortEntry>(
-      initialSelection: comPorts[0],
-      controller: portController,
-      label: const Text('COM Ports'),
-      dropdownMenuEntries: ports,
-      onSelected: (ComPortEntry? port) {
-        setState(() {
-          portSelected = port;
-        });
-      },
+    return Container(
+      alignment: Alignment.center,
+      child: DropdownMenu<ComPortEntry>(
+        initialSelection: comPorts[0],
+        controller: portController,
+        label: const Text('COM Ports'),
+        dropdownMenuEntries: ports,
+        onSelected: (ComPortEntry? port) {
+          setState(() {
+            portSelected = port;
+          });
+        },
+      ),
     );
   }
 }
