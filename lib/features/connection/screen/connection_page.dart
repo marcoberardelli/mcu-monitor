@@ -4,6 +4,7 @@ import 'package:mcu_monitor/features/connection/bloc/connection_bloc.dart';
 import 'package:mcu_monitor/features/connection/bloc/connection_event.dart';
 import 'package:mcu_monitor/features/connection/widget/baud_rate.dart';
 import 'package:mcu_monitor/features/connection/widget/com_port.dart';
+import 'package:mcu_monitor/features/connection/widget/connect_button.dart';
 import 'package:mcu_monitor/features/connection/widget/data_bit.dart';
 import 'package:mcu_monitor/features/connection/widget/parity_bit.dart';
 import 'package:mcu_monitor/features/connection/widget/stop_bit.dart';
@@ -13,25 +14,17 @@ class ConnectionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final connectionBloc = BlocProvider.of<ConnectionBloc>(context);
-
-    final List<Widget> list = [
-      const ComPort(),
-      const BaudRate(),
-      const DataBit(),
-      const StopBit(),
-      const ParityBit(),
-      Container(
-        alignment: Alignment.center,
-        child: MaterialButton(
-              height: 100,
-              minWidth: 200,
-              onPressed: () => connectionBloc.add(ConnectionConnect()),
-              child: const Text("Connect"),
-            ),
-      )];
+    const List<Widget> list = [
+      ComPort(),
+      BaudRate(),
+      DataBit(),
+      StopBit(),
+      ParityBit(),
+      ConnectButton(),
+    ];
     return Container(
       alignment: Alignment.center,
+      
       child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: MediaQuery.of(context).size.shortestSide < 700 ? 1 : 3, 

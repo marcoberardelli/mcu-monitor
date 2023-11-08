@@ -38,7 +38,7 @@ class _ParityBitState extends State<DataBit> {
       child: DropdownMenu<DataBitEntry>(
         initialSelection: dataBits[0],
         controller: dataBitController,
-        label: const Text('Parity Bit'),
+        label: const Text('Data Bit'),
         dropdownMenuEntries: dataBitsList,
         onSelected: (DataBitEntry? bits) {
           setState(() {
