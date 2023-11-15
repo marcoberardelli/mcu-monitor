@@ -7,7 +7,7 @@ import 'package:mcu_monitor/features/core/app_style.dart';
 import 'package:mcu_monitor/features/core/host_details.dart';
 import 'package:mcu_monitor/features/core/widget/drawer.dart';
 import 'package:mcu_monitor/features/core/widget/navigation_bar.dart';
-import 'package:side_navigation/side_navigation.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
         body: Row(
           children: [
             navBar,
-            const Expanded(child: const ConnectionPage()),
+            const Expanded(child: ConnectionPage()),
           ],
         ),
         );

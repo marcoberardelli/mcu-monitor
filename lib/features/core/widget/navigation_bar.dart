@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mcu_monitor/features/connection/bloc/connection_bloc.dart';
+import 'package:mcu_monitor/features/connection/bloc/connection_state.dart';
 import 'package:mcu_monitor/features/connection/widget/baud_rate.dart';
 import 'package:mcu_monitor/features/connection/widget/com_port.dart';
 import 'package:mcu_monitor/features/connection/widget/connect_button.dart';
@@ -8,8 +11,17 @@ import 'package:mcu_monitor/features/connection/widget/stop_bit.dart';
 import 'package:side_navigation/side_navigation.dart';
 
 
+class NavBarItem {
+  final Icon icon;
+  final String label;
+  const NavBarItem(this.icon, this.label);
+}
+
 class NavBar extends StatefulWidget {
-const NavBar({ Key? key }) : super(key: key);
+
+  final int index;
+
+  const NavBar({Key? key, this.index = 0}) : super(key: key);
 
   @override
   State<NavBar> createState() => _NavBarState();
@@ -17,10 +29,8 @@ const NavBar({ Key? key }) : super(key: key);
 
 class _NavBarState extends State<NavBar> {
 
-  int selectedIndex = 0;
-
-  final List<String> navBarItems = [
-    "Connect",
+  final List<NavBarItem> navBarItems = [
+    NavBarItem(Icons.link)"Connect", // todo
     "Info",
     "Digital",
     "Analog",
@@ -28,7 +38,7 @@ class _NavBarState extends State<NavBar> {
   ];
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     const List<Widget> list = [
       ComPort(),
       BaudRate(),
@@ -38,24 +48,28 @@ class _NavBarState extends State<NavBar> {
       ConnectButton(),
     ];
 
-    return SideNavigationBar(
-      header: const SideNavigationBarHeader(
-        image: Icon(Icons.home), title: Text("2BiTS"), subtitle: Text("Monitoring")),
-      selectedIndex: selectedIndex, 
-      items: navBarItems.map((e) => SideNavigationBarItem(
-        icon: Icons.arrow_back_ios, 
-        label: e)).toList(), 
-      onTap: (index) {
-        setState(() {
-          selectedIndex = index;
-        });
+    return BlocBuilder<ConnectionBloc, ConnectionStateMCU>(
+      builder: (context, state) {
+        return Visibility(
+          visible: (state is ConnectedMCU) ? true : false, // if connected, show navigation bar
+          child: SideNavigationBar(
+            header: const SideNavigationBarHeader(
+                image: Icon(Icons.home),
+                title: Text("2BiTS"),
+                subtitle: Text("Monitoring")),
+            selectedIndex: widget.index,
+            items: navBarItems
+                .map((e) =>
+                    SideNavigationBarItem(icon: Icons.arrow_back_ios, label: e))
+                .toList(),
+            onTap: (index) {
+              setState(() {
+                selectedIndex = index;
+              });
+            },
+          ),
+        );
       },
-      toggler: SideBarToggler(
-        expandIcon: Icons.keyboard_arrow_left,
-        shrinkIcon: Icons.keyboard_arrow_right,
-        onToggle: () {
-          print('Toggle');
-        }),
-      );
+    );
   }
 }
